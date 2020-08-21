@@ -1,0 +1,45 @@
+<div class="container-fluid d-flex flex-column justify-content-center align-items-center" id="containerHomepage">
+    
+    <header class="mb-auto text-warning"></header>
+
+    <main>    
+        <div class="row justify-content-center text-center">
+            <div class="col-7">
+                <form action="/" method="POST">
+
+                    <div class="form-group mb-4">
+                        <label for="countryCode" class="text-warning mb-3 text-monospace"> - Country - </label>
+                        <select class="custom-select custom-select-lg" id="countryCode" name="countryCode">
+                        <% countries.forEach(country => { %>
+                            <option value="<%= country.code %>"><%= country.name %></option>
+                        <% }); %> 
+                        </select>
+                    </div>
+
+                    <div class="form-group mb-4">
+                        <label for="city" class="text-warning mb-3 text-monospace"> - City - </label>
+                        <input type="text" name="city" id="city" class="form-control form-control-lg">
+                    </div>
+
+                    <div class="form-group mb-5">
+                        <label for="job" class="text-warning mb-3 text-monospace"> - Job - </label>
+                        <input type="text" name="job" id="job" class="form-control form-control-lg">
+                    </div>
+
+                    <div class="form-group mb-5">
+                        <label for="keywords" class="text-warning mb-3 text-monospace"> - Keywords - </label>
+                        <input type="text" name="keywords" id="keywords" class="form-control form-control-lg">
+                    </div>
+
+                    <button type="submit" class="btn btn-lg btn-outline-warning btn-block mt-5 text-monospace text-uppercase">Search</button>
+                
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="mt-auto text-warning font-weight-light">
+        <p><u>This project has been built using NodeJs, Express, Puppeteer and Bootstrap</u></p>
+    </footer>
+
+</div>

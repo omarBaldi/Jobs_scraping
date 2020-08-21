@@ -1,0 +1,70 @@
+<div class="container-fluid" id="containerJobs">
+    <div class="row">
+        <div class="col-12">
+            <div class="card bg-transparent border-0 text-start mx-5 my-5">
+
+                <div class="card-header border-0">
+                    <h3 class="text-white">Jobs scraped for the position of <span class="text-warning"><%= nameJob %></span> in <span class="text-warning"><%= city %></span></h3>
+                </div>
+
+                <div class="card-body">
+                    <table class="table table-hover">
+
+                        <thead class="text-warning text-monospace text-uppercase font-weight-lighter">
+                          <tr>
+                            <th scope="col">Position</th>
+                            <th scope="col">Company</th>
+                            <th scope="col">Time</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Requirements</th>
+                          </tr>
+                        </thead>
+
+                        <tbody class="text-white">
+                            <% jobs.forEach((job, index) => { %>
+                                <% if (job.containWord) { %>
+                                    <tr>
+                                        <td><%= job.title %></td>
+                                        <td><%= job.location %></td>
+                                        <td><%= job.time %></td>
+                                        <td><%= job.description %></td>
+                                        <td>
+                                            <button 
+                                            type="button" 
+                                            class="btn btn-warning" 
+                                            data-toggle="modal"
+                                            data-target="#job<%= index %>"
+                                            aria-expanded="false"
+                                            >
+                                                View Job
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <div class="modal fade" id="job<%= index %>" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-hidden="true">
+                                        <div class="modal-dialog modal-dialog-scrollable">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="staticBackdropLabel">Job Full Description</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div class="modal-body"><%= job.fullDescription %></div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    <a href="<%= job.linkToPage %>" target="_blank" type="button" class="btn btn-primary">Go to link</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                <% } %> 
+                            <% }); %>
+                        </tbody>
+
+                      </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
