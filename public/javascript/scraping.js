@@ -1,9 +1,13 @@
 const puppeteer = require('puppeteer');
 let isFirstTime = true;
+let maxTime = 2; /* |--> TEMPORARY */
+let currentTime = 0; /* |--> TEMPORARY */
+let indexPage = 0;
+
+process.setMaxListeners(Infinity);
 
 
 async function startScraping(url, { city, job, keywords }) {
-
 
     const browser = await puppeteer.launch({ headless: true, slowMo: 50 });
     const page = await browser.newPage();
@@ -18,6 +22,8 @@ async function startScraping(url, { city, job, keywords }) {
         isFirstTime = !isFirstTime;
         baseURL = page.url();
     }
+
+    await page.waitFor('.jobsearch-SerpJobCard', { timeout: 0 });
 
     const jobs = await page.evaluate(() => {
         return Array
@@ -44,8 +50,25 @@ async function startScraping(url, { city, job, keywords }) {
     };
 
     await page.close();
-    
-    return jobs
+
+    //RECURSION TEMPORARY
+    if (currentTime >= maxTime) {
+        return jobs;
+    } else {
+        currentTime += 1;
+        indexPage += 10;
+        const newURL = baseURL + `&start=${indexPage}`;
+        return jobs.concat(await startScraping(newURL, { city, job, keywords }));
+    }
+
+    //RECURSION DEFINITIVE
+    /* if (jobs.length <= 0) {
+        return jobs
+    } else {
+        indexPage += 10;
+        const newURL = baseURL + `&start=${indexPage}`;
+        return jobs.concat(await startScraping(newURL, { city, job, keywords }));
+    } */
    
 };
 
